@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Agario Remake</title>
+    <link rel="stylesheet" type="text/css" href="public/style.css">
+  </head>
+  <body>
+
+    <div id="player"></div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const playerElement = document.getElementById('player');
+        var playerId;
+        var socket = io();
+        socket.on('assignId', (id) => { playerId = id });
+        socket.on('position', (data) => {
+          playerElement.style.top = data.top + 'px';
+          playerElement.style.left = data.left + 'px';
+        });
+        document.addEventListener('keydown', (event) => {
+          let direction = '';
+          switch(event.key){
+            case 'w':
+              direction = 'up';
+              break;
+            case 'd':
+              direction = 'right';
+              break;
+            case 's':
+              direction = 'down';
+              break;
+            case 'a':
+              direction = 'left';
+              break;
+            default:
+              return;
+          }
+          socket.emit('startMove', {
+            'direction': direction,
+            'player': playerId
+          });
+        });
+        document.addEventListener('keyup', (event) => {
+          let direction = '';
+          switch(event.key){
+            case 'w':
+              direction = 'up';
+              break;
+            case 'd':
+              direction = 'right';
+              break;
+            case 's':
+              direction = 'down';
+              break;
+            case 'a':
+              direction = 'left';
+              break;
+            default:
+              return;
+          }
+          socket.emit('endMove', {
+            'direction': direction,
+            'player': playerId
+          });
+        });
+    </script>
+  </body>
+</html>
