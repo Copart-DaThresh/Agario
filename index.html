@@ -6,9 +6,11 @@
   </head>
   <body>
 
+    <div id="background"></div>
+
     <div id="player"></div>
     <div id="players">
-      <!--  <span class="player" id="[id]"></span>-->
+      <!--  <span class="player" id="[id]"></span>  -->
     </div>
 
 
@@ -53,7 +55,7 @@
               }
             }
           }
-          if(positionReceiveCount > 5){
+          if(positionReceiveCount > 15){
             let playerElements = document.getElementById('players').children;
             for(var i = 0; i < playerElements.length; i++){
               if(!ids[playerElements[i].id]){
@@ -84,7 +86,7 @@
           if(!directions[direction]){
             socket.emit('startMove', {
               'direction': direction,
-              'player': playerId
+              'playerId': playerId
             });
             directions[direction] = true;
           }
@@ -110,7 +112,7 @@
           if(directions[direction]){
             socket.emit('endMove', {
               'direction': direction,
-              'player': playerId
+              'playerId': playerId
             });
             directions[direction] = false;
           }
