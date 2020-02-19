@@ -1,5 +1,10 @@
 === master
 
+=== 0.0.3 (DaThresh)(2020-02-18)
+
+* Fixed removed player's rendering (DaThresh)(2020-02-18)
+* Changed server position emitter to emit once per game loop
+
 === 0.0.2 (DaThresh)(2020-02-18)
 
 * Added local directions reference (DaThresh)(2020-02-18)

@@ -26,26 +26,41 @@
         var socket = io();
         socket.on('assignId', (id) => { playerId = id });
 
-        socket.on('position', (data) => {
-          if(data.id == playerId){
-            playerElement.style.top = data.position.top + 'px';
-            playerElement.style.left = data.position.left + 'px';
-          } else {
-            if(typeof(players[data.id]) != undefined && players[data.id]){
-              players[data.id]['element'].style.top = data.position.top + 'px';
-              players[data.id]['element'].style.left = data.position.left + 'px';
+        var positionReceiveCount = 0;
+        socket.on('position', (playerPositions) => {
+          let ids = {};
+          positionReceiveCount++;
+          for(var i = 0; i < playerPositions.length; i++){
+            let player = playerPositions[i];
+            if(player.id == playerId){
+              playerElement.style.top = player.position.top + 'px';
+              playerElement.style.left = player.position.left + 'px';
             } else {
-              let newElement = document.createElement('span');
-              newElement.classList.add('player');
-              newElement.id = data.id;
-              document.getElementById('players').appendChild(newElement);
-              players[data.id] = {
-                top: data.position.top,
-                left: data.position.left,
-                element: newElement,
+              ids[player.id] = true;
+              if(players[player.id]){
+                players[player.id]['element'].style.top = player.position.top + 'px';
+                players[player.id]['element'].style.left = player.position.left + 'px';
+              } else {
+                let newElement = document.createElement('span');
+                newElement.classList.add('player');
+                newElement.id = player.id;
+                document.getElementById('players').appendChild(newElement);
+                players[player.id] = {
+                  top: player.position.top,
+                  left: player.position.left,
+                  element: newElement
+                }
               }
-              console.log(players[data.id]);
             }
+          }
+          if(positionReceiveCount > 5){
+            let playerElements = document.getElementById('players').children;
+            for(var i = 0; i < playerElements.length; i++){
+              if(!ids[playerElements[i].id]){
+                playerElements[i].remove();
+              }
+            }
+            positionReceiveCount = 0;
           }
         });
         document.addEventListener('keydown', (event) => {

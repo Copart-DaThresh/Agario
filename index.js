@@ -66,6 +66,7 @@ io.on('connection', function(socket){
 http.listen(port, () => {console.log("App now listening on port 8000")});
 
 function runGameLoop(){
+    let playerPositions = [];
     for(var i = 0; i < playerList.length; i++){
         let player = playerList[i];
         if(player.directions.up){
@@ -80,8 +81,12 @@ function runGameLoop(){
         if (player.directions.left){
             player.position.left -= 10;
         }
-        io.emit('position', {id: player.id, position: player.position});
+        playerPositions.push({
+            id: player.id,
+            position: player.position
+        });
     }
+    io.emit('position', playerPositions);
 }
 
 setInterval(runGameLoop, 50);
