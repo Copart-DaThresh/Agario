@@ -7,17 +7,46 @@
   <body>
 
     <div id="player"></div>
+    <div id="players">
+      <!--  <span class="player" id="[id]"></span>-->
+    </div>
 
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        const directions = {
+          up: false,
+          right: false,
+          down: false,
+          left: false
+        }
         const playerElement = document.getElementById('player');
         var playerId;
+        var players = {};
         var socket = io();
         socket.on('assignId', (id) => { playerId = id });
+
         socket.on('position', (data) => {
-          playerElement.style.top = data.top + 'px';
-          playerElement.style.left = data.left + 'px';
+          if(data.id == playerId){
+            playerElement.style.top = data.position.top + 'px';
+            playerElement.style.left = data.position.left + 'px';
+          } else {
+            if(typeof(players[data.id]) != undefined && players[data.id]){
+              players[data.id]['element'].style.top = data.position.top + 'px';
+              players[data.id]['element'].style.left = data.position.left + 'px';
+            } else {
+              let newElement = document.createElement('span');
+              newElement.classList.add('player');
+              newElement.id = data.id;
+              document.getElementById('players').appendChild(newElement);
+              players[data.id] = {
+                top: data.position.top,
+                left: data.position.left,
+                element: newElement,
+              }
+              console.log(players[data.id]);
+            }
+          }
         });
         document.addEventListener('keydown', (event) => {
           let direction = '';
@@ -37,10 +66,13 @@
             default:
               return;
           }
-          socket.emit('startMove', {
-            'direction': direction,
-            'player': playerId
-          });
+          if(!directions[direction]){
+            socket.emit('startMove', {
+              'direction': direction,
+              'player': playerId
+            });
+            directions[direction] = true;
+          }
         });
         document.addEventListener('keyup', (event) => {
           let direction = '';
@@ -60,10 +92,13 @@
             default:
               return;
           }
-          socket.emit('endMove', {
-            'direction': direction,
-            'player': playerId
-          });
+          if(directions[direction]){
+            socket.emit('endMove', {
+              'direction': direction,
+              'player': playerId
+            });
+            directions[direction] = false;
+          }
         });
     </script>
   </body>

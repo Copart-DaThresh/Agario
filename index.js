@@ -38,6 +38,11 @@ io.on('connection', function(socket){
     playerId++;
     console.log('A user connected');
     socket.on('disconnect', () => {
+        for(var i = 0; i < playerList.length; i++){
+            if(playerList[i].socket == socket){
+                playerList.splice(i, 1);
+            }
+        }
         console.log('A user disconnected');
     });
     socket.on('startMove', (data) => {
@@ -64,19 +69,19 @@ function runGameLoop(){
     for(var i = 0; i < playerList.length; i++){
         let player = playerList[i];
         if(player.directions.up){
-            player.position.top -= 20;
+            player.position.top -= 10;
         }
         if (player.directions.down){
-            player.position.top += 20;
+            player.position.top += 10;
         }
         if(player.directions.right){
-            player.position.left += 20;
+            player.position.left += 10;
         }
         if (player.directions.left){
-            player.position.left -= 20;
+            player.position.left -= 10;
         }
-        player.socket.emit('position', player.position);
+        io.emit('position', {id: player.id, position: player.position});
     }
 }
 
-setInterval(runGameLoop, 100);
+setInterval(runGameLoop, 50);

@@ -8,3 +8,14 @@
     width: 25px;
     height: 25px;
 }
+
+.player{
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    border-radius: 100%;
+    background-color: lightcoral;
+    border: 2px solid black;
+    width: 25px;
+    height: 25px;
+}

@@ -16,3 +16,4 @@ Please make sure all system dependencies are installed before you run! (Listed b
 
 * [NodeJS](https://nodejs.org/en/)
 * [NPM](https://nodejs.org/en/) (Included with Node)
+* [Git](https://git-scm.com/downloads)
