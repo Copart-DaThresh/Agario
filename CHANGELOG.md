@@ -1,5 +1,9 @@
 === master
 
+=== 0.0.5 (DaThresh)(2020-02-19)
+
+* Fixed previous build's issue only allowing one player to be rendered (DaThresh)(2020-02-19)
+
 === 0.0.4 (DaThresh)(2020-02-19)
 
 * Changed directional updates to a calculated function (DaThresh)(2020-02-19)

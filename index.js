@@ -60,7 +60,7 @@ io.on('connection', function(socket){
     if(session.playerId){
         console.log('User id ' + session.playerId + ' connnected');
         socket.emit('assignId', session.playerId);
-        let player = findPlayerObj(session.playerId);
+        let player = players[session.playerId];
         player.active = true;
         player.socket = socket;
     } else {
@@ -88,7 +88,7 @@ io.on('connection', function(socket){
     })
 });
 
-http.listen(port, () => {console.log("App now listening on port 8000")});
+http.listen(port, () => {console.log("App now listening on port " + port)});
 
 function runGameLoop(){
     let playerPositions = [];
@@ -98,11 +98,11 @@ function runGameLoop(){
         if(!player.active) { continue; }
         let directions = [null,'left','right','up','down'];
         let positions = ['left', 'top'];
-        for(var i = 1; i < directions.length; i++){
-            let dir = directions[i];
+        for(let x = 1; x < directions.length; x++){
+            let dir = directions[x];
             if(player.directions[dir]){
-                let pos = positions[i / 2 > 1 ? 1 : 0];
-                i % 2 != 0 ? add = false : add = true
+                let pos = positions[x / 2 > 1 ? 1 : 0];
+                x % 2 != 0 ? add = false : add = true
                 let pxSpeed = 5;
                 add ? newVal = player.position[pos] + pxSpeed : newVal = player.position[pos] - pxSpeed;
                 if(newVal > 0 && newVal < boundaries[pos]){
