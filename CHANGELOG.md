@@ -1,5 +1,13 @@
 === master
 
+=== 0.0.6 (DaThresh)(2020-02-21)
+
+* Separated player initializing into a separate function (DaThresh)(2020-02-21)
+* Added a serverId so sessions wouldn't be valid on server restart (DaThresh)(2020-02-21)
+* Added a logger (DaThresh)(2020-02-21)
+* Separated routes to separate file (DaThresh)(2020-02-21)
+* Separated game loop to a separate file (DaThresh)(2020-02-21)
+
 === 0.0.5 (DaThresh)(2020-02-19)
 
 * Fixed previous build's issue only allowing one player to be rendered (DaThresh)(2020-02-19)

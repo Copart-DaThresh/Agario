@@ -1,9 +1,13 @@
+// LOAD THE LOGGER FIRST
+global.Logger = require('./utilities/logger');
+
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const expressSession = require('express-session');
 const sharedSession = require('express-socket.io-session');
+const gameLoop = require('./game/loop');
 const port = 8000;
 const session = expressSession({
     secret: 'supah_secret_key',
@@ -11,24 +15,29 @@ const session = expressSession({
     saveUninitialized: true
 })
 
-const boundaries = {
+global.boundaries = {
     top: 900,
     left: 1500
-};
+}
+
+Logger.log('Setting server ID...');
+const serverId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+Logger.log('Server ID: ' + serverId);
 
 app.use(session);
+app.use(function(req, res, next){
+    if(!req.url.endsWith('.css')){
+        Logger.logRequest(req);
+    }
+    next();
+});
 
 io.use(sharedSession(session, {
     autoSave: true
 }));
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});
-
-app.get('/public/style.css', function(req, res){
-    res.sendFile(__dirname + '/public/style.css');
-});
+Logger.log('Requiring routes...');
+require('./config/routes')(app);
 
 var playerId = 1;
 var players = {};
@@ -55,21 +64,28 @@ function createPlayer(id, socket){
     return player;
 }
 
+function init(socket){
+    var session = socket.handshake.session;
+    while(players[playerId]){ playerId++; }
+    socket.emit('assignId', playerId);
+    createPlayer(playerId, socket);
+    session.playerId = playerId;
+    session.serverId = serverId;
+    session.save();
+    console.log('User id ' + playerId + ' connected');
+    playerId++;
+}
+
 io.on('connection', function(socket){
     var session = socket.handshake.session;
-    if(session.playerId){
+    if(session.playerId && session.serverId == serverId){
         console.log('User id ' + session.playerId + ' connnected');
         socket.emit('assignId', session.playerId);
         let player = players[session.playerId];
         player.active = true;
         player.socket = socket;
     } else {
-        socket.emit('assignId', playerId);
-        createPlayer(playerId, socket);
-        session.playerId = playerId;
-        session.save();
-        console.log('User id ' + playerId + ' connected');
-        playerId++;
+        init(socket);
     }
 
     socket.on('disconnect', () => {
@@ -90,32 +106,6 @@ io.on('connection', function(socket){
 
 http.listen(port, () => {console.log("App now listening on port " + port)});
 
-function runGameLoop(){
-    let playerPositions = [];
-    for(var i = 0; i < playerList.length; i++){
-        let playerId = playerList[i];
-        let player = players[playerId];
-        if(!player.active) { continue; }
-        let directions = [null,'left','right','up','down'];
-        let positions = ['left', 'top'];
-        for(let x = 1; x < directions.length; x++){
-            let dir = directions[x];
-            if(player.directions[dir]){
-                let pos = positions[x / 2 > 1 ? 1 : 0];
-                x % 2 != 0 ? add = false : add = true
-                let pxSpeed = 5;
-                add ? newVal = player.position[pos] + pxSpeed : newVal = player.position[pos] - pxSpeed;
-                if(newVal > 0 && newVal < boundaries[pos]){
-                    player.position[pos] = newVal;
-                }
-            }
-        }
-        playerPositions.push({
-            id: playerId,
-            position: player.position
-        });
-    }
-    io.emit('position', playerPositions);
-}
-
-setInterval(runGameLoop, 15);
+setInterval(() => {
+    gameLoop(playerList, players, io);
+}, 15);
