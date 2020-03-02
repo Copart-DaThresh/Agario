@@ -1,6 +1,9 @@
 // LOAD THE LOGGER FIRST
 global.Logger = require('./utilities/logger');
 
+Logger.log('Loading the configuration file...');
+require('./config/load');
+
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
@@ -15,22 +18,12 @@ const session = expressSession({
     saveUninitialized: true
 })
 
-global.boundaries = {
-    top: 900,
-    left: 1500
-}
-
 Logger.log('Setting server ID...');
 const serverId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 Logger.log('Server ID: ' + serverId);
 
 app.use(session);
-app.use(function(req, res, next){
-    if(!req.url.endsWith('.css')){
-        Logger.logRequest(req);
-    }
-    next();
-});
+app.use(require('./middleware/request_log'));
 
 io.use(sharedSession(session, {
     autoSave: true

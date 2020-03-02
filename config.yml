@@ -1,0 +1,9 @@
+boundaries:
+  top: 900
+  left: 1500
+
+logging:
+  excluded:
+    - css
+    - js
+    - ico

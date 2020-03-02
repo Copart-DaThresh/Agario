@@ -1,5 +1,13 @@
 === master
 
+
+=== 0.0.7 (DaThresh)(2020-03-02)
+
+* Added Config YML (DaThresh)(2020-03-02)
+* Added JS-Yaml (DaThresh)(2020-03-02)
+* Created middleware folder (DaThresh)(2020-03-02)
+* Moved request logging out of index file into middleware (DaThresh)(2020-03-02)
+
 === 0.0.6 (DaThresh)(2020-02-21)
 
 * Separated player initializing into a separate function (DaThresh)(2020-02-21)
