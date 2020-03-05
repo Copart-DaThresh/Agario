@@ -6,6 +6,7 @@
 * Added cells to the game (DaThresh)
 * Added adjustable cell spawn rate in the config (DaThresh)
 * Added border shading to cells client side (DaThresh)
+* Added port to config.yml (DaThresh)
 
 === 0.0.7 (2020-03-02)
 

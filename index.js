@@ -12,7 +12,6 @@ const expressSession = require('express-session');
 const sharedSession = require('express-socket.io-session');
 const gameLoop = require('./game/loop');
 const createCell = require('./game/cell');
-const port = 8000;
 const session = expressSession({
     secret: 'supah_secret_key',
     resave: true,
@@ -81,7 +80,7 @@ io.on('connection', function(socket){
     })
 });
 
-http.listen(port, () => {console.log("App now listening on port " + port)});
+http.listen(server.port, () => {console.log("App now listening on port " + server.port)});
 
 setInterval(() => {
     gameLoop(playerList, players, io);

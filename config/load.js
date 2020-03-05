@@ -6,6 +6,9 @@ const appPath = path.dirname(require.main.filename);
 try {
     let configData = yaml.safeLoad(fs.readFileSync(appPath + '/config.yml', 'utf8'));
 
+    global.server = {
+        port: configData.server['port']
+    }
     global.boundaries = {
         left: configData.boundaries['left'],
         top: configData.boundaries['top']
