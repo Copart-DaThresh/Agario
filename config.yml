@@ -7,3 +7,11 @@ logging:
     - css
     - js
     - ico
+
+cells:
+  cell mass: 2
+  colors:
+    - red
+    - blue
+    - yellow
+    - green

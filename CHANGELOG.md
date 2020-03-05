@@ -1,49 +1,53 @@
 === master
 
+=== 0.0.8 (2020-03-05)
 
-=== 0.0.7 (DaThresh)(2020-03-02)
+* Added z-index to player and players (DaThresh)
+* Added cells to the game (DaThresh)
 
-* Added Config YML (DaThresh)(2020-03-02)
-* Added JS-Yaml (DaThresh)(2020-03-02)
-* Created middleware folder (DaThresh)(2020-03-02)
-* Moved request logging out of index file into middleware (DaThresh)(2020-03-02)
+=== 0.0.7 (2020-03-02)
 
-=== 0.0.6 (DaThresh)(2020-02-21)
+* Added Config YML (DaThresh)
+* Added JS-Yaml (DaThresh)
+* Created middleware folder (DaThresh)
+* Moved request logging out of index file into middleware (DaThresh)
 
-* Separated player initializing into a separate function (DaThresh)(2020-02-21)
-* Added a serverId so sessions wouldn't be valid on server restart (DaThresh)(2020-02-21)
-* Added a logger (DaThresh)(2020-02-21)
-* Separated routes to separate file (DaThresh)(2020-02-21)
-* Separated game loop to a separate file (DaThresh)(2020-02-21)
+=== 0.0.6 (2020-02-21)
 
-=== 0.0.5 (DaThresh)(2020-02-19)
+* Separated player initializing into a separate function (DaThresh)
+* Added a serverId so sessions wouldn't be valid on server restart (DaThresh)
+* Added a logger (DaThresh)
+* Separated routes to separate file (DaThresh)
+* Separated game loop to a separate file (DaThresh)
 
-* Fixed previous build's issue only allowing one player to be rendered (DaThresh)(2020-02-19)
+=== 0.0.5 (2020-02-19)
 
-=== 0.0.4 (DaThresh)(2020-02-19)
+* Fixed previous build's issue only allowing one player to be rendered (DaThresh)
 
-* Changed directional updates to a calculated function (DaThresh)(2020-02-19)
-* Added in express-session, socket.io-express-session hook (DaThresh)(2020-02-19)
-* Conserves player IDs based upon session (DaThresh)(2020-02-19)
-* Added 'active' key to player objects (DaThresh)(2020-02-19)
-* Added players as object hash (DaThresh)(2020-02-19)
-* Changed socket functions to utilize player hash system (DaThresh)(2020-02-19)
-* Changed playerList to be array of player IDs (DaThresh)(2020-02-19)
-* Added movement speed variable (DaThresh)(2020-02-19)
-* Implemented boundaries (DaThresh)(2020-02-19)
+=== 0.0.4 (2020-02-19)
 
-=== 0.0.3 (DaThresh)(2020-02-18)
+* Changed directional updates to a calculated function (DaThresh)
+* Added in express-session, socket.io-express-session hook (DaThresh)
+* Conserves player IDs based upon session (DaThresh)
+* Added 'active' key to player objects (DaThresh)
+* Added players as object hash (DaThresh)
+* Changed socket functions to utilize player hash system (DaThresh)
+* Changed playerList to be array of player IDs (DaThresh)
+* Added movement speed variable (DaThresh)
+* Implemented boundaries (DaThresh)
 
-* Fixed removed player's rendering (DaThresh)(2020-02-18)
-* Changed server position emitter to emit once per game loop (DaThresh)(2020-02-18)
+=== 0.0.3 (2020-02-18)
 
-=== 0.0.2 (DaThresh)(2020-02-18)
+* Fixed removed player's rendering (DaThresh)
+* Changed server position emitter to emit once per game loop (DaThresh)
 
-* Added local directions reference (DaThresh)(2020-02-18)
-* Added Git as system dependency inside Readme (DaThresh)(2020-02-18)
-* Started implementing multiplayer (BUGGY)(DaThresh)(2020-02-18)
-* Sped up game speed by 2x (DaThresh)(2020-02-18)
+=== 0.0.2 (2020-02-18)
 
-=== 0.0.1 (DaThresh)(2020-02-18)
+* Added local directions reference (DaThresh)
+* Added Git as system dependency inside Readme (DaThresh)
+* Started implementing multiplayer (BUGGY)(DaThresh)
+* Sped up game speed by 2x (DaThresh)
 
-* Started making the game (DaThresh)(2020-02-18)
+=== 0.0.1 (2020-02-18)
+
+* Started making the game (DaThresh)

@@ -1,3 +1,5 @@
+const generateCell = require('./cell');
+
 module.exports = (playerList, players, io) => {
     let playerPositions = [];
     for(var i = 0; i < playerList.length; i++){

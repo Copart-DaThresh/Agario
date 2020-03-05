@@ -13,6 +13,10 @@ try {
     global.logging = {
         excluded: configData.logging['excluded']
     }
+    global.cells = {
+        mass: configData.cells['cell mass'],
+        colors: configData.cells['colors']
+    }
 
 } catch(err){
     throw new Error('Cannot load configuration file.');

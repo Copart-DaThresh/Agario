@@ -12,6 +12,9 @@
     <div id="players">
       <!--  <span class="player" id="[id]"></span>  -->
     </div>
+    <div id="cells">
+      <!-- <span class="cell" id="[id]"></span> -->
+    </div>
 
 
     <script src="/socket.io/socket.io.js"></script>
@@ -25,6 +28,7 @@
         const playerElement = document.getElementById('player');
         var playerId;
         var players = {};
+        var cells = {};
         var socket = io();
         socket.on('assignId', (id) => { playerId = id });
 
@@ -65,6 +69,27 @@
             positionReceiveCount = 0;
           }
         });
+
+        socket.on('cells', (cellData) => {
+          for(var i = 0; i < cellData.length; i++){
+            let cell = cellData[i];
+            if(!cells[cell.id]){
+              let element = document.createElement('div');
+              element.classList.add('cell');
+              element.style.top = cell.top + 'px';
+              element.style.left = cell.left + 'px';
+              element.style.width = (cell.mass * 10) + 'px';
+              element.style.height = (cell.mass * 10) + 'px';
+              element.style.backgroundColor = cell.color;
+              element.id = cell.id;
+              cells[cell.id] = {
+                element: element
+              }
+              document.getElementById('cells').appendChild(element);
+            }
+          }
+        });
+
         document.addEventListener('keydown', (event) => {
           let direction = '';
           switch(event.key){

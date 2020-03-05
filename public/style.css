@@ -7,6 +7,7 @@
     border: 2px solid black;
     width: 25px;
     height: 25px;
+    z-index: 100;
 }
 
 .player{
@@ -18,6 +19,12 @@
     border: 2px solid black;
     width: 25px;
     height: 25px;
+    z-index: 10;
+}
+
+.cell {
+    position: absolute;
+    border-radius: 100%;
 }
 
 #background{
