@@ -10,8 +10,13 @@ logging:
 
 cells:
   cell mass: 2
+  # cell spawn rate, 1-10
+  spawn rate: 3
+  # all available colors: https://www.w3schools.com/colors/colors_names.asp
   colors:
     - red
     - blue
-    - yellow
+    - orange
     - green
+    - rebeccapurple
+    - maroon

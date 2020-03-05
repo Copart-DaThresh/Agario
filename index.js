@@ -38,33 +38,14 @@ var players = {};
 var playerList = [];
 var cells = [];
 
-function createPlayer(id, socket){
-    let player = {
-        'id': id,
-        'socket': socket,
-        'directions': {
-            'up': false,
-            'right': false,
-            'down': false,
-            'left': false
-        },
-        'position': {
-            'left': 250,
-            'top': 250
-        },
-        'mass': 50,
-        'active': true
-    }
-    players[id] = player;
-    playerList.push(id);
-    return player;
-}
+Logger.log('Requiring player creator...');
+const createPlayer = require('./game/player');
 
 function init(socket){
     var session = socket.handshake.session;
     while(players[playerId]){ playerId++; }
     socket.emit('assignId', playerId);
-    createPlayer(playerId, socket);
+    createPlayer(playerId, socket, players, playerList);
     session.playerId = playerId;
     session.serverId = serverId;
     session.save();
@@ -108,4 +89,4 @@ setInterval(() => {
 setInterval(() => {
     cells.push(createCell());
     io.emit('cells', cells);
-}, 500);
+}, (2000 / global.cells.rate));

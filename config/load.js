@@ -15,7 +15,8 @@ try {
     }
     global.cells = {
         mass: configData.cells['cell mass'],
-        colors: configData.cells['colors']
+        colors: configData.cells['colors'],
+        rate: configData.cells['spawn rate']
     }
 
 } catch(err){

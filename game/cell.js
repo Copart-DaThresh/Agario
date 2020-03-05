@@ -1,3 +1,7 @@
+const path = require('path');
+const appPath = path.dirname(require.main.filename);
+const Color = require(appPath + '/utilities/colors');
+
 module.exports = () => {
     let top = Math.floor(Math.random() * boundaries.top);
     let left = Math.floor(Math.random() * boundaries.left);
@@ -5,7 +9,7 @@ module.exports = () => {
         top: top,
         left: left,
         mass: cells.mass,
-        color: getRandomColor(),
+        color: Color.getHex(getRandomColor()),
         id: getCellId()
     }
 }
@@ -22,7 +26,6 @@ function getCellId(){
         intArr.push(getRandInt());
     }
     return String(intArr.join(''));
-
 
     function getRandInt(){
         return Math.floor(Math.random()*100);
