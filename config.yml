@@ -10,6 +10,7 @@ logging:
     - css
     - js
     - ico
+    - png
 
 cells:
   cell mass: 2
